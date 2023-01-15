@@ -20,8 +20,8 @@ import { CheckCircleIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
     { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
-    { name: 'Manage Forum Categories', href: route('category'), icon: FolderIcon, current: route().current('category') },
-    { name: 'Manage Forum Threads', href: '#', icon: FolderIcon, current: false },
+    { name: 'Manage Forum Categories', href: route('category'), icon: FolderIcon, current: route().current('category')||route().current('category.create')||route().current('category.edit')  },
+    { name: 'Manage Forums', href: route('forums'), icon: FolderIcon, current: route().current('forums')||route().current('forums.create')||route().current('forums.edit')  },
     { name: 'Manage Users', href: route('users'), icon: UsersIcon, current: route().current('users')||route().current('users.create')||route().current('users.edit') },
     // { name: 'Manage Roles & Permissions', href: route('roles'), icon: UsersIcon, current: route().current('roles') },
 ]
@@ -158,7 +158,7 @@ const logout = () => {
                             </div>
                         </div>
 
-                        <div v-if="$page.props.flash.error">
+                        <div v-if="$page.props.error">
                             <div class="rounded-md bg-red-50 p-4 my-4">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
