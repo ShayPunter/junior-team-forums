@@ -22,8 +22,16 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    $categories = \App\Models\Category::all();
+
+
+
+    foreach ($categories as $category) {
+
+    }
+
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
+        '' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
@@ -40,12 +48,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/logout', function () {
-        Session::flush();
-        Auth::logout();
-
-        return redirect('/');
-    });
+    Route::get('/logout-perform', 'LogoutController@perform')->name('logout.perform');
 
     Route::resource('/users', UserController::class)->name('index', 'users');
     Route::resource('/roles', RolesController::class)->name('index', 'roles');

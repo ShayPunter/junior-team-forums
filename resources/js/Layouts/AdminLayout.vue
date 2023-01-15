@@ -27,7 +27,7 @@ const navigation = [
 ]
 const userNavigation = [
     { name: 'Settings', href: route('profile.show') },
-    { name: 'Sign out', href: route('logout') },
+    { name: 'Sign out', href: route('logout.perform') },
 ]
 
 const sidebarOpen = ref(false)
