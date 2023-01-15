@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class RolesPolicy
 {
     use HandlesAuthorization;
 
@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->can('users.index') || $user->can('users.*')) {
+        if ($user->can('roles.index') || $user->can('roles.*')) {
             return true;
         }
     }
@@ -26,12 +26,11 @@ class UserPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user)
     {
-        if ($user->can('users.view') || $user->can('users.*')) {
+        if ($user->can('roles.view') || $user->can('roles.*')) {
             return true;
         }
     }
@@ -44,7 +43,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        if ($user->can('users.create') || $user->can('users.*')) {
+        if ($user->can('roles.create') || $user->can('roles.*')) {
             return true;
         }
     }
@@ -53,16 +52,12 @@ class UserPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
-        if ($user->can('users.update')) {
-            return $user->id === $model->user;
-        }
 
-        if ($user->can('users.*')) {
+        if ($user->can('roles.*') || $user->can('roles.update')) {
             return true;
         }
     }
@@ -73,14 +68,10 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
-        if ($user->can('users.*')) {
+        if ($user->can('roles.delete') || $user->can('roles.*')) {
             return true;
-        }
-
-        if ($user->can('users.delete')) {
-            return $user->id === $model->user;
         }
     }
 
@@ -93,7 +84,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        if ($user->can('users.*')) {
+        if ($user->can('roles.*')) {
             return true;
         }
     }
@@ -107,7 +98,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        if ($user->can('users.*')) {
+        if ($user->can('roles.*')) {
             return true;
         }
     }

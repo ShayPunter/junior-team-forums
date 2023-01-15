@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(User::class, 'user');
+        $this->authorizeResource(Role::class, 'roles');
     }
 
     /**
@@ -23,22 +24,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $roles = Role::all();
 
-        $userArray = [];
+        $roleArray = [];
 
-        foreach ($users as $user) {
-
-            $roles = '';
-
-            foreach ($user->getRoleNames() as $role) {
-                $roles .= $role . ", ";
-            }
-
-            $userArray[] = ['user' => $user, 'role' => substr(trim($roles), 0, -1)];
+        foreach ($roles as $role) {
+            $roleArray[] = ['role' => $role, 'permissions' => $role->permissions->count()];
         }
 
-        return Inertia::render('Users/Index', ['users' => $userArray]);
+        return Inertia::render('Roles/Index', ['roles' => $roleArray]);
     }
 
     /**
@@ -48,7 +42,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Roles/Create');
     }
 
     /**
@@ -110,7 +104,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, User $user)
     {
@@ -153,16 +147,5 @@ class UserController extends Controller
         $user->delete();
 
         return Redirect::route('users')->with('success', 'User deleted successfully.');
-    }
-
-    /**
-     * Checks if a role exists
-     *
-     * @param $role_name
-     * @return bool
-     */
-    private function roleExist($role)
-    {
-        return \Spatie\Permission\Models\Role::where('name', '=', $role)->count() > 0;
     }
 }

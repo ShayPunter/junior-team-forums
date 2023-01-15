@@ -31,7 +31,11 @@ class SetupCommand extends Command
      */
     public function handle()
     {
+        $this->info('[Forum Setup] Running database migrations...');
 
+        $this->call('migrate');
+
+        $this->info('[Forum Setup] Database migrations completed.');
         $this->info('[Forum Setup] Creating roles...');
 
         // Create Roles
@@ -58,6 +62,14 @@ class SetupCommand extends Command
         $user_update = Permission::create(['name' => 'users.update']);
         $user_delete = Permission::create(['name' => 'users.delete']);
 
+        $roles_admin = Permission::create(['name' => 'roles.*']);
+        $roles_index = Permission::create(['name' => 'roles.index']);
+        $roles_show = Permission::create(['name' => 'roles.show']);
+        $roles_create = Permission::create(['name' => 'roles.create']);
+        $roles_edit = Permission::create(['name' => 'roles.edit']);
+        $roles_update = Permission::create(['name' => 'roles.update']);
+        $roles_delete = Permission::create(['name' => 'roles.delete']);
+
         // Assign Permissions
         $default->givePermissionTo($server_index);
         $default->givePermissionTo($server_show);
@@ -68,6 +80,7 @@ class SetupCommand extends Command
 
         $admin->givePermissionTo($server_admin);
         $admin->givePermissionTo($user_admin);
+        $admin->givePermissionTo($roles_admin);
 
         $this->info('[Forum Setup] Permissions setup.');
         $this->info('[Forum Setup] Creating admin user...');
