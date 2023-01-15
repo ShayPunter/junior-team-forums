@@ -1,14 +1,13 @@
 <script setup>
 import Welcome from '@/Components/Welcome.vue';
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 </script>
 
 <template>
     <AdminLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
+        <template #pagehead>
+            <PageHeader title="dashboard" :button="false"></PageHeader>
         </template>
 
         <div class="py-12">

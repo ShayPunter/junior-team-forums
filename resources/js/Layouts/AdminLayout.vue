@@ -15,14 +15,14 @@ import {
     FolderIcon,
     HomeIcon,
     UsersIcon,
-    XMarkIcon,
 } from '@heroicons/vue/24/outline'
+import { CheckCircleIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
-    { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route('dashboard') },
+    { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
     { name: 'Manage Forum Categories', href: '#', icon: FolderIcon, current: false },
     { name: 'Manage Forum Threads', href: '#', icon: FolderIcon, current: false },
-    { name: 'Manage Users', href: route('users'), icon: UsersIcon, current: route('users')||route('users.create')||route('users.edit') },
+    { name: 'Manage Users', href: route('users'), icon: UsersIcon, current: route().current('users')||route().current('users.create')||route().current('users.edit') },
     { name: 'Manage Roles & Permissions', href: '#', icon: UsersIcon, current: false },
 ]
 const userNavigation = [
@@ -42,7 +42,7 @@ const logout = () => {
 
 <template>
     <div>
-        <Head :title="title" />
+
 
         <TransitionRoot as="template" :show="sidebarOpen">
             <Dialog as="div" class="relative z-40 md:hidden" @close="sidebarOpen = false">
@@ -137,12 +137,54 @@ const logout = () => {
             <main>
                 <div class="py-6">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                        <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                        <div v-if="$page.props.flash.success">
+                            <div class="rounded-md bg-green-50 p-4 my-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-green-800">{{ $page.props.flash.success }}</p>
+                                    </div>
+                                    <div class="ml-auto pl-3">
+                                        <div class="-mx-1.5 -my-1.5">
+                                            <button @click="$page.props.flash.success = false" type="button" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">
+                                                <span class="sr-only">Dismiss</span>
+                                                <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-if="$page.props.flash.error">
+                            <div class="rounded-md bg-red-50 p-4 my-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <XMarkIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-red-800">{{ $page.props.errors }}</p>
+                                    </div>
+                                    <div class="ml-auto pl-3">
+                                        <div class="-mx-1.5 -my-1.5">
+                                            <button @click="$page.props.error = false" type="button" class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50">
+                                                <span class="sr-only">Dismiss</span>
+                                                <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <slot name="pagehead" />
                     </div>
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                         <!-- Replace with your content -->
                         <div class="py-4">
-                            <div class="h-96 rounded-lg border-4 border-dashed border-gray-200" />
+                            <slot></slot>
                         </div>
                         <!-- /End replace -->
                     </div>
