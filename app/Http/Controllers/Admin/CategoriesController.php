@@ -22,7 +22,6 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-
         // todo: get number of threads under a category
 
         return Inertia::render('Categories/Index', ['categories' => Category::all()]);
@@ -47,7 +46,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string']
+            'name' => ['required', 'string'],
         ]);
 
         $category = new Category();
@@ -90,7 +89,7 @@ class CategoriesController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => ['required', 'string']
+            'name' => ['required', 'string'],
         ]);
 
         $category->name = $request->name;

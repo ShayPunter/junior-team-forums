@@ -56,7 +56,6 @@ class RolesPolicy
      */
     public function update(User $user)
     {
-
         if ($user->can('roles.*') || $user->can('roles.update')) {
             return true;
         }

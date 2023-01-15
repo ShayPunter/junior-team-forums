@@ -105,7 +105,7 @@ class SetupCommand extends Command
         $this->info('[Forum Setup] Admin User Details: ');
         $this->info('[Forum Setup] Email: admin@admin.com');
         $this->info('[Forum Setup] Password: superadminpassword');
-        $this->info('[Forum Setup] Login URL: ' . env('APP_URL') . '/login');
+        $this->info('[Forum Setup] Login URL: '.env('APP_URL').'/login');
 
         return Command::SUCCESS;
     }

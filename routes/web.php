@@ -33,7 +33,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'inject_user_role'
+    'inject_user_role',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -42,6 +42,7 @@ Route::middleware([
     Route::get('/logout', function () {
         Session::flush();
         Auth::logout();
+
         return redirect('/');
     });
 

@@ -29,11 +29,10 @@ class UserController extends Controller
         $userArray = [];
 
         foreach ($users as $user) {
-
             $roles = '';
 
             foreach ($user->getRoleNames() as $role) {
-                $roles .= $role . ", ";
+                $roles .= $role.', ';
             }
 
             $userArray[] = ['user' => $user, 'role' => substr(trim($roles), 0, -1)];
