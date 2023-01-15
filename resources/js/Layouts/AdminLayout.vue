@@ -20,7 +20,7 @@ import { CheckCircleIcon, XMarkIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
     { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
-    { name: 'Manage Forum Categories', href: '#', icon: FolderIcon, current: false },
+    { name: 'Manage Forum Categories', href: route('category'), icon: FolderIcon, current: route().current('category') },
     { name: 'Manage Forum Threads', href: '#', icon: FolderIcon, current: false },
     { name: 'Manage Users', href: route('users'), icon: UsersIcon, current: route().current('users')||route().current('users.create')||route().current('users.edit') },
     { name: 'Manage Roles & Permissions', href: route('roles'), icon: UsersIcon, current: route().current('roles') },
