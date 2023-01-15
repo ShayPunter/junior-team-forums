@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Laravel\Jetstream\Jetstream;
-use Spatie\Permission\Models\Role;
 
-class RolesController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Role::class, 'roles');
+        $this->authorizeResource(User::class, 'user');
     }
 
     /**
@@ -24,15 +24,22 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $users = User::all();
 
-        $roleArray = [];
+        $userArray = [];
 
-        foreach ($roles as $role) {
-            $roleArray[] = ['role' => $role, 'permissions' => $role->permissions->count()];
+        foreach ($users as $user) {
+
+            $roles = '';
+
+            foreach ($user->getRoleNames() as $role) {
+                $roles .= $role . ", ";
+            }
+
+            $userArray[] = ['user' => $user, 'role' => substr(trim($roles), 0, -1)];
         }
 
-        return Inertia::render('Roles/Index', ['roles' => $roleArray]);
+        return Inertia::render('Users/Index', ['users' => $userArray]);
     }
 
     /**
@@ -42,7 +49,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Create');
+        return Inertia::render('Users/Create');
     }
 
     /**
@@ -104,7 +111,7 @@ class RolesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, User $user)
     {
@@ -147,5 +154,16 @@ class RolesController extends Controller
         $user->delete();
 
         return Redirect::route('users')->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Checks if a role exists
+     *
+     * @param $role_name
+     * @return bool
+     */
+    private function roleExist($role)
+    {
+        return \Spatie\Permission\Models\Role::where('name', '=', $role)->count() > 0;
     }
 }
