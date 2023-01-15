@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ForumController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
     'inject_user_role',
-])->group(function () {
+])->prefix('/admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
@@ -49,4 +50,5 @@ Route::middleware([
     Route::resource('/users', UserController::class)->name('index', 'users');
     Route::resource('/roles', RolesController::class)->name('index', 'roles');
     Route::resource('/category', CategoriesController::class)->name('index', 'category');
+    Route::resource('/forums', ForumController::class)->name('index', 'forums');
 });
