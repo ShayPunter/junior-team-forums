@@ -6,10 +6,10 @@ use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\ThreadController;
 use App\Models\Forum;
+use App\Models\Thread;
 use App\Models\ThreadReplies;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Models\Thread;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +30,7 @@ Route::get('/forums/{id}', function ($id) {
     $threads = [];
 
     foreach (Thread::where('forum_id', $id)->get() as $thread) {
-
         $threads[] = ['thread' => $thread, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())];
-
     }
 
     return Inertia::render('Forum', ['forum' => Forum::where('id', $id)->first(), 'threads' => $threads]);

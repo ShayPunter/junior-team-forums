@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Forum;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
 use App\Models\User;
@@ -12,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Laravel\Jetstream\Jetstream;
 use Stevebauman\Purify\Facades\Purify;
 
 class ThreadController extends Controller
@@ -20,7 +18,7 @@ class ThreadController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Category  $category
+     * @param  Category  $category
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Category $category)

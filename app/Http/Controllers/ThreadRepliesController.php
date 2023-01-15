@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Thread;
 use App\Models\ThreadReplies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +50,7 @@ class ThreadRepliesController extends Controller
         $threadReplies->content = Purify::clean($request->replyContent);
         $threadReplies->save();
 
-        Log::info('stored thingy: ' . $threadReplies);
+        Log::info('stored thingy: '.$threadReplies);
 
         return Redirect::refresh(200);
     }

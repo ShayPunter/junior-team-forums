@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Thread;
 use App\Models\ThreadReplies;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Thread;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +43,10 @@ Route::prefix('/internal')->group(function () {
     })->name('api-user');
 
     Route::get('/threadReplies/{thread_id}', function ($thread_id) {
-
         // loop through thread replies to get user
         $threadRepliesArray = [];
 
         foreach (ThreadReplies::where('thread_id', $thread_id)->get() as $threadReply) {
-
             $user = User::where('id', $threadReply->user_id)->first();
 
             $threadRepliesArray[] = ['threadReply' => $threadReply, 'poster' => $user];
@@ -56,5 +54,4 @@ Route::prefix('/internal')->group(function () {
 
         return response()->json($threadRepliesArray);
     })->name('api-thread-replies');
-
 });

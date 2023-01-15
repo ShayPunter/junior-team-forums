@@ -46,9 +46,7 @@ class HomeController extends Controller
         $threads = [];
 
         foreach (Thread::where('forum_id', $forum->id)->get() as $thread) {
-
             $threads = [$thread, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())];
-
         }
 
         return response()->json(['forum' => $forum, 'threads' => $threads]);
