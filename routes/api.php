@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\ThreadReplies;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Thread;
@@ -20,9 +22,39 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('/api/internal')->group(function () {
+Route::prefix('/internal')->group(function () {
     Route::get('/categories', [HomeController::class, 'index'])->name('api-categories');
+
     Route::get('/threads/count/{forum_id}', function ($forum_id) {
         return response()->json(count(Thread::where('forum_id', $forum_id)->get()));
     })->name('api-thread-count');
+
+    Route::get('/threads/replies/count/{thread_id}', function ($thread_id) {
+        return response()->json(count(ThreadReplies::where('forum_id', $thread_id)->get()));
+    })->name('api-thread-replies-count');
+
+    Route::get('/forum/', [HomeController::class, 'show'])->name('api-forum');
+
+    Route::get('/user/{id}/public', function ($id) {
+        $name = \App\Models\User::where('id', $id)->pluck('name');
+        $profile = \App\Models\User::where('id', $id)->pluck('profile_photo_url');
+
+        return response()->json(['user_profile' => ['name' => $name, 'profile_photo_url' => $profile]]);
+    })->name('api-user');
+
+    Route::get('/threadReplies/{thread_id}', function ($thread_id) {
+
+        // loop through thread replies to get user
+        $threadRepliesArray = [];
+
+        foreach (ThreadReplies::where('thread_id', $thread_id)->get() as $threadReply) {
+
+            $user = User::where('id', $threadReply->user_id)->first();
+
+            $threadRepliesArray[] = ['threadReply' => $threadReply, 'poster' => $user];
+        }
+
+        return response()->json($threadRepliesArray);
+    })->name('api-thread-replies');
+
 });

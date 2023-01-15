@@ -6,7 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Forum;
 use App\Models\Thread;
+use App\Models\ThreadReplies;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+use Laravel\Jetstream\Jetstream;
+use Stevebauman\Purify\Facades\Purify;
 
 class ThreadController extends Controller
 {
@@ -18,39 +25,55 @@ class ThreadController extends Controller
      */
     public function index(Category $category)
     {
-        return response()->json(['forums' => Forum::where('category_id', $category->id)->get()]);
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function create()
+    public function create($forum_id)
     {
-        //
+        return Inertia::render('ThreadCreate', ['forum' => $forum_id]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required'],
+            'forum' => ['required', 'integer'],
+        ]);
+
+        $thread = new Thread();
+        $thread->title = $request->input('title');
+        $thread->content = Purify::clean($request->input('content'));
+        $thread->forum_id = $request->input('forum');
+        $thread->user_id = Auth::user()->id;
+        $thread->locked = false;
+        $thread->save();
+
+        return Redirect::route('thread.show', $thread);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Thread $thread)
     {
-        //
+        $poster = User::where('id', $thread->user_id)->first();
+
+        return Inertia::render('Thread', ['thread' => $thread, 'poster' => $poster, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())]);
     }
 
     /**

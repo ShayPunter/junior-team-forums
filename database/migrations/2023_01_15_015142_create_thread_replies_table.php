@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('thread_replies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('thread_id');
+            $table->integer('user_id');
+            $table->text('content');
         });
     }
 

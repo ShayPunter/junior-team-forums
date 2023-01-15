@@ -7,52 +7,41 @@ import { ChevronRightIcon, ChatBubbleLeftIcon } from '@heroicons/vue/20/solid'
 export default {
     data() {
         return {
-            categories: '',
+            threads: '',
         }
     },
 
     mounted() {
 
         // fetch all categories and forums
-        axios.get(route('api-categories')).then(response => {
-            console.log(response.data.categories)
-            this.categories = response.data.categories
-        })
+        // axios.get(route('api-forum', this.$page.props.forum)).then(response => {
+        //     this.threads = response.data
+        // })
 
     },
-
-    methods: {
-        async getThreadCount(forum_id) {
-            let count;
-
-            try {
-                const response = await fetch(route('api-thread-count', forum_id));
-                const data = await response.json();
-                count = data;
-            } catch (err) {
-                console.error(err);
-            }
-
-            console.log(count)
-
-            return count;
-        }
-    },
-
 }
 </script>
 
 <template>
     <AppLayout title="Junior Team Forum">
-        <template #pagetitle>Junior Team Forum</template>
+        <template #pagetitle>Viewing Forum: {{ this.$page.props.forum.name }}</template>
 
-        <div v-for="category in categories" class="overflow-hidden bg-white shadow sm:rounded-md mt-6">
+        <div class="overflow-hidden bg-white shadow sm:rounded-md mt-6">
             <div class="border-b border-gray-200 bg-gray-100 px-4 py-5 sm:px-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ category.category.name }}</h3>
+                <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+                    <div class="ml-4 mt-2">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ this.$page.props.forum.name }}</h3>
+                    </div>
+                    <div class="ml-4 mt-2 flex-shrink-0">
+                        <a :href="route('thread.create', this.$page.props.forum.id)">
+                            <button type="button" class="relative inline-flex items-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">Create new thread</button>
+                        </a>
+                    </div>
+                </div>
             </div>
             <ul role="list" class="divide-y divide-gray-200">
-                <li v-for="forum in category.forums" :key="forum.id">
-                    <a :href="route('view-forum', forum.forum.id)" class="block hover:bg-gray-50">
+                <li v-for="thread in this.$page.props.threads" :key="thread.thread.id">
+                    <a :href="route('thread.show', thread.thread)" class="block hover:bg-gray-50">
                         <div class="flex items-center px-4 py-4 sm:px-6">
                             <div class="flex min-w-0 flex-1 items-center">
                                 <div class="flex-shrink-0 mr-4">
@@ -60,13 +49,13 @@ export default {
                                 </div>
                                 <div class="truncate">
                                     <div class="flex text-sm">
-                                        <p class="truncate font-semibold text-lg text-gray-900">{{ forum.forum.name }}</p>
+                                        <p class="truncate font-semibold text-lg text-gray-900">{{ thread.thread.title }}</p>
                                     </div>
                                     <div class="mt-2 flex">
                                         <div class="flex items-center text-sm text-gray-500">
                                             <ChatBubbleLeftIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                             <p class="text-sm">
-                                                Threads: {{ forum.threadCount }}
+                                                Thread Replies: {{ thread.replies }}
                                             </p>
                                         </div>
                                     </div>

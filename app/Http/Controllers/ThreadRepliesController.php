@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Thread;
 use App\Models\ThreadReplies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Stevebauman\Purify\Facades\Purify;
 
 class ThreadRepliesController extends Controller
 {
@@ -31,11 +36,24 @@ class ThreadRepliesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'replyContent' => ['required'],
+            'thread' => ['required', 'integer'],
+        ]);
+
+        $threadReplies = new ThreadReplies();
+        $threadReplies->user_id = Auth::user()->id;
+        $threadReplies->thread_id = $request->thread;
+        $threadReplies->content = Purify::clean($request->replyContent);
+        $threadReplies->save();
+
+        Log::info('stored thingy: ' . $threadReplies);
+
+        return Redirect::refresh(200);
     }
 
     /**

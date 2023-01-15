@@ -4,11 +4,12 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ForumController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Frontend\ThreadController;
+use App\Models\Forum;
+use App\Models\ThreadReplies;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use App\Models\Thread;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +23,24 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    $categories = \App\Models\Category::all();
+    return Inertia::render('Welcome');
+})->name('welcome');
 
+Route::get('/forums/{id}', function ($id) {
+    $threads = [];
 
+    foreach (Thread::where('forum_id', $id)->get() as $thread) {
 
-    foreach ($categories as $category) {
+        $threads[] = ['thread' => $thread, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())];
 
     }
 
-    return Inertia::render('Welcome', [
-        '' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return Inertia::render('Forum', ['forum' => Forum::where('id', $id)->first(), 'threads' => $threads]);
+})->name('view-forum');
+
+Route::resource('/thread', ThreadController::class)->name('index', 'thread')->name('create', 'thread.notinuse');
+Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');
+Route::resource('/threadReplies', \App\Http\Controllers\ThreadRepliesController::class)->name('store', 'threadReplies.store');
 
 Route::middleware([
     'auth:sanctum',

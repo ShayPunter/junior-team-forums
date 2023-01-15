@@ -10,11 +10,11 @@ const user = {
 }
 
 const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
+    { name: 'Home', href: route('welcome'), current: route().current('welcome') },
+    // { name: 'Team', href: '#', current: false },
+    // { name: 'Projects', href: '#', current: false },
+    // { name: 'Calendar', href: '#', current: false },
+    // { name: 'Reports', href: '#', current: false },
 ]
 const userNavigation = [
     { name: 'Settings', href: route('profile.show') },
@@ -104,7 +104,7 @@ const userNavigation = [
             <!-- Page Heading -->
             <header class="bg-white shadow">
                 <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-                    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><slot name="page_title"></slot></h1>
+                    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><slot name="pagetitle"></slot></h1>
                 </div>
             </header>
 

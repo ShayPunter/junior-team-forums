@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('content');
             $table->boolean('locked');
             $table->integer('forum_id');
+            $table->string('title');
+            $table->integer('user_id');
         });
     }
 
