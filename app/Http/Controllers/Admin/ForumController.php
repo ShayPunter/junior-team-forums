@@ -50,7 +50,7 @@ class ForumController extends Controller
         $forum->position = count(Forum::all()) + 1;
         $forum->save();
 
-        return Redirect::route('forums')->with('success', 'Category created successfully.');
+        return Redirect::route('forums')->with('success', 'Forum created successfully.');
     }
 
     /**
