@@ -70,17 +70,22 @@ class SetupCommand extends Command
         $roles_update = Permission::create(['name' => 'roles.update']);
         $roles_delete = Permission::create(['name' => 'roles.delete']);
 
+        $categories_admin = Permission::create(['name' => 'categories.*']);
+        $categories_index = Permission::create(['name' => 'categories.index']);
+        $categories_show = Permission::create(['name' => 'categories.show']);
+        $categories_create = Permission::create(['name' => 'categories.create']);
+        $categories_edit = Permission::create(['name' => 'categories.edit']);
+        $categories_update = Permission::create(['name' => 'categories.update']);
+        $categories_delete = Permission::create(['name' => 'categories.delete']);
+
         // Assign Permissions
-        $default->givePermissionTo($server_index);
-        $default->givePermissionTo($server_show);
-        $default->givePermissionTo($server_create);
-        $default->givePermissionTo($server_edit);
-        $default->givePermissionTo($server_update);
-        $default->givePermissionTo($server_delete);
+        $default->givePermissionTo($categories_index);
+        $default->givePermissionTo($categories_show);
 
         $admin->givePermissionTo($server_admin);
         $admin->givePermissionTo($user_admin);
         $admin->givePermissionTo($roles_admin);
+        $admin->givePermissionTo($categories_admin);
 
         $this->info('[Forum Setup] Permissions setup.');
         $this->info('[Forum Setup] Creating admin user...');
