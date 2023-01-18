@@ -87,7 +87,7 @@ export default {
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-sm font-medium text-gray-900">
-                        <a href="#" class="hover:underline">{{ this.$page.props.poster.name }}</a>
+                        <a href="#" class="hover:underline">{{ this.$page.props.poster.name }} <span v-for="role in this.$page.props.poster.role" :class="role === 'admin' ? ['bg-red-500 px-[6px] py-[2px] rounded text-white'] : ['']">{{ role }}</span></a>
                     </p>
                     <p class="text-sm text-gray-500">
                         <a href="#" class="hover:underline">{{ dayjs(this.$page.props.thread.created_at).format('DD/MM/YYYY HH:MM') }}</a>
@@ -115,6 +115,7 @@ export default {
                 <p class="text-lg font-semibold my-2 font-medium text-gray-900">
                     {{ threadReply.poster.name }}
                 </p>
+                <p v-for="role in threadReply.poster.role" :class="role === 'admin' ? ['bg-red-500 text-center w-1/2 py-[2px] rounded text-white'] : ['w-1/2 py-[2px] rounded text-white']">{{ role }}</p>
             </div>
 
             <div class="lg:col-span-10">
