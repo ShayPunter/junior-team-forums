@@ -18,23 +18,18 @@ export default {
             thread: '',
             threadReplies: '',
             toolbarOptions: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                [{ 'size': ['small', false, 'large', 'huge'] }],
+                ['bold', 'italic', 'underline', 'strike'],
                 ['blockquote', 'code-block'],
 
-                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-                [{ 'direction': 'rtl' }],                         // text direction
 
-                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-                [{ 'font': [] }],
+                [{ 'color': [] }, { 'background': [] }],
                 [{ 'align': [] }],
 
-                ['clean']                                         // remove formatting button
+                ['link', 'image'],
+
+                ['clean']
             ]
         }
     },
@@ -57,6 +52,25 @@ export default {
             })
 
             location.reload();
+        },
+
+        handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+            let formData = new FormData();
+            formData.append("image", file);
+
+            axios({
+                url: route('api-uploadImage'),
+                method: "POST",
+                data: formData
+            })
+                .then(result => {
+                    const url = result.data.url; // Get url from response
+                    Editor.insertEmbed(cursorLocation, "image", url);
+                    resetUploader();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 }
@@ -135,7 +149,8 @@ export default {
 
             <div class="lg:col-span-10">
                 <div class="xl:col-span-2 xl:mt-0">
-                    <VueEditor v-model="form.content" height="150" class="w-full"/>
+                    <VueEditor id="editor" useCustomImageHandler
+                               @imageAdded="handleImageAdded" v-model="form.content" height="150" class="w-full" :editor-toolbar="toolbarOptions"/>
 
                     <div class="pt-5">
                         <div class="flex justify-end">

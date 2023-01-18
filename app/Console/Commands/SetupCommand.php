@@ -86,6 +86,8 @@ class SetupCommand extends Command
         $forums_update = Permission::create(['name' => 'forums.update']);
         $forums_delete = Permission::create(['name' => 'forums.delete']);
 
+        $admin_view = Permission::create(['name' => 'admin.view']);
+
         // Assign Permissions
         $default->givePermissionTo($categories_index);
         $default->givePermissionTo($categories_show);
@@ -97,6 +99,7 @@ class SetupCommand extends Command
         $admin->givePermissionTo($roles_admin);
         $admin->givePermissionTo($categories_admin);
         $admin->givePermissionTo($forums_admin);
+        $admin->givePermissionTo($admin_view);
 
         $this->info('[Forum Setup] Permissions setup.');
         $this->info('[Forum Setup] Creating admin user...');

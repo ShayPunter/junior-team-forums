@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\ImageController;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
 use App\Models\User;
@@ -54,4 +55,7 @@ Route::prefix('/internal')->group(function () {
 
         return response()->json($threadRepliesArray);
     })->name('api-thread-replies');
+
+    // todo: API image uploader
+    Route::post('/uploadImage', [ImageController::class, 'uploadImage'])->name('api-uploadImage');
 });
