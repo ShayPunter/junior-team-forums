@@ -45,6 +45,7 @@ class ThreadRepliesController extends Controller
             'thread' => ['required', 'integer'],
         ]);
 
+
         $threadReplies = new ThreadReplies();
         $threadReplies->user_id = Auth::user()->id;
         $threadReplies->thread_id = $request->thread;

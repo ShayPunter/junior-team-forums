@@ -149,8 +149,14 @@ export default {
 
             <div class="lg:col-span-10">
                 <div class="xl:col-span-2 xl:mt-0">
-                    <VueEditor id="editor" useCustomImageHandler
-                               @imageAdded="handleImageAdded" v-model="form.content" height="150" class="w-full" :editor-toolbar="toolbarOptions"/>
+                    <VueEditor id="editor"
+                               useCustomImageHandler
+                               @imageAdded="handleImageAdded"
+                               v-model="form.content"
+                               height="150"
+                               class="w-full"
+                               :editor-toolbar="toolbarOptions"
+                               />
 
                     <div class="pt-5">
                         <div class="flex justify-end">
@@ -168,13 +174,7 @@ export default {
 </template>
 
 <style>
-.ql-editor {
-    height: 150px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-size: revert;
-}
+@import '../../css/quill.css';
 
 blockquote {
     margin: 5px;
