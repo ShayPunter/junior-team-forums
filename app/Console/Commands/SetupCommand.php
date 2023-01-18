@@ -45,15 +45,6 @@ class SetupCommand extends Command
         $this->info('[Forum Setup] Created Roles');
         $this->info('[Forum Setup] Setting up permissions...');
 
-        // Create Permissions
-        $server_admin = Permission::create(['name' => 'servers.*']);
-        $server_index = Permission::create(['name' => 'servers.index']);
-        $server_show = Permission::create(['name' => 'servers.show']);
-        $server_create = Permission::create(['name' => 'servers.create']);
-        $server_edit = Permission::create(['name' => 'servers.edit']);
-        $server_update = Permission::create(['name' => 'servers.update']);
-        $server_delete = Permission::create(['name' => 'servers.delete']);
-
         $user_admin = Permission::create(['name' => 'users.*']);
         $user_index = Permission::create(['name' => 'users.index']);
         $user_show = Permission::create(['name' => 'users.show']);
@@ -94,7 +85,6 @@ class SetupCommand extends Command
         $default->givePermissionTo($forums_index);
         $default->givePermissionTo($forums_show);
 
-        $admin->givePermissionTo($server_admin);
         $admin->givePermissionTo($user_admin);
         $admin->givePermissionTo($roles_admin);
         $admin->givePermissionTo($categories_admin);
@@ -104,11 +94,13 @@ class SetupCommand extends Command
         $this->info('[Forum Setup] Permissions setup.');
         $this->info('[Forum Setup] Creating admin user...');
 
+        $password = $this->getRandomString(16);
+
         // Create an admin user
         $user = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('superadminpassword'),
+            'password' => Hash::make($password),
         ]);
 
         $user->assignRole('admin');
@@ -118,9 +110,28 @@ class SetupCommand extends Command
         $this->info('');
         $this->info('[Forum Setup] Admin User Details: ');
         $this->info('[Forum Setup] Email: admin@admin.com');
-        $this->info('[Forum Setup] Password: superadminpassword');
+        $this->info('[Forum Setup] Password: ' . $password);
         $this->info('[Forum Setup] Login URL: '.env('APP_URL').'/login');
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * Generates a random string of defined length
+     *
+     * @param $n
+     * @return string
+     */
+    function getRandomString($n)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
     }
 }
