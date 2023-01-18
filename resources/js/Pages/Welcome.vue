@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { ChevronRightIcon, ChatBubbleLeftIcon } from '@heroicons/vue/20/solid'
+import { ChevronRightIcon, ChatBubbleLeftIcon} from '@heroicons/vue/20/solid'
+import { ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
 </script>
 
 <script>
@@ -56,7 +57,7 @@ export default {
                         <div class="flex items-center px-4 py-4 sm:px-6">
                             <div class="flex min-w-0 flex-1 items-center">
                                 <div class="flex-shrink-0 mr-4">
-                                    <img src="https://via.placeholder.com/48" class="w-[48px] h-[48px]" alt="Forum Image">
+                                    <ChatBubbleLeftRightIcon class="w-[48px] h-[48px]"></ChatBubbleLeftRightIcon>
                                 </div>
                                 <div class="truncate">
                                     <div class="flex text-sm">
