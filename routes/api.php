@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
 use App\Models\User;
@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/internal')->group(function () {
-    Route::get('/categories', [HomeController::class, 'index'])->name('api-categories');
+    Route::get('/categories', [FrontendController::class, 'index'])->name('api-categories');
 
     Route::get('/threads/count/{forum_id}', function ($forum_id) {
         return response()->json(count(Thread::where('forum_id', $forum_id)->get()));
@@ -33,7 +33,7 @@ Route::prefix('/internal')->group(function () {
         return response()->json(count(ThreadReplies::where('forum_id', $thread_id)->get()));
     })->name('api-thread-replies-count');
 
-    Route::get('/forum/', [HomeController::class, 'show'])->name('api-forum');
+    Route::get('/forum/', [FrontendController::class, 'show'])->name('api-forum');
 
     Route::get('/user/{id}/public', function ($id) {
         $name = \App\Models\User::where('id', $id)->pluck('name');

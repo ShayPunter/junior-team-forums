@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ForumController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ThreadController;
+use App\Http\Controllers\ThreadRepliesController;
 use App\Models\Forum;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
@@ -22,23 +24,23 @@ use Inertia\Inertia;
 |
 */
 
+
+// / (home page)
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('welcome');
 
-Route::get('/forums/{id}', function ($id) {
-    $threads = [];
+// /forums/{id} (gets the forums and threads)
+Route::get('/forums/{id}', [FrontendController::class, 'get_forum'])->name('view-forum');
 
-    foreach (Thread::where('forum_id', $id)->get() as $thread) {
-        $threads[] = ['thread' => $thread, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())];
-    }
-
-    return Inertia::render('Forum', ['forum' => Forum::where('id', $id)->first(), 'threads' => $threads]);
-})->name('view-forum');
-
+// /thread (thread resource)
 Route::resource('/thread', ThreadController::class)->name('index', 'thread')->name('create', 'thread.notinuse');
+
+// /forums/{forum_id}/create (create thread in forum)
 Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');
-Route::resource('/threadReplies', \App\Http\Controllers\ThreadRepliesController::class)->name('store', 'threadReplies.store');
+
+// /threadReplies (thread-replies resource management route)
+Route::resource('/threadReplies', ThreadRepliesController::class)->name('store', 'threadReplies.store');
 
 Route::middleware([
     'auth:sanctum',
@@ -46,14 +48,21 @@ Route::middleware([
     'verified',
     'inject_user_role',
 ])->prefix('/admin')->group(function () {
+
+    // /admin/dashboard (admin dashboard)
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/logout-perform', 'LogoutController@perform')->name('logout.perform');
-
+    // /users (resource URLs for managing users)
     Route::resource('/users', UserController::class)->name('index', 'users');
+    // /roles (resource URLs for managing roles)
     Route::resource('/roles', RolesController::class)->name('index', 'roles');
+    // /category (resource URLs for managing forum categories
     Route::resource('/category', CategoriesController::class)->name('index', 'category');
+    // /forums (resource URLs for managing forums
     Route::resource('/forums', ForumController::class)->name('index', 'forums');
+
+    // /logout-perform (logs out a user when they hit this url)
+    Route::get('/logout-perform', 'LogoutController@perform')->name('logout.perform');
 });

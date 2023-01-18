@@ -7,8 +7,9 @@ use App\Models\Category;
 use App\Models\Forum;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
+use Inertia\Inertia;
 
-class HomeController extends Controller
+class FrontendController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -50,5 +51,21 @@ class HomeController extends Controller
         }
 
         return response()->json(['forum' => $forum, 'threads' => $threads]);
+    }
+
+    /**
+     * Display the forum resource with thread
+     *
+     * @param $id
+     * @return \Inertia\Response
+     */
+    public function get_forum($id) {
+        $threads = [];
+
+        foreach (Thread::where('forum_id', $id)->get() as $thread) {
+            $threads[] = ['thread' => $thread, 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())];
+        }
+
+        return Inertia::render('Forum', ['forum' => Forum::where('id', $id)->first(), 'threads' => $threads]);
     }
 }

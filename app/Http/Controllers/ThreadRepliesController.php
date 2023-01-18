@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ThreadReplies;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -48,11 +49,12 @@ class ThreadRepliesController extends Controller
         $threadReplies->user_id = Auth::user()->id;
         $threadReplies->thread_id = $request->thread;
         $threadReplies->content = Purify::clean($request->replyContent);
+        $threadReplies->created_at = Carbon::now();
         $threadReplies->save();
 
         Log::info('stored thingy: '.$threadReplies);
 
-        return Redirect::refresh(200);
+        return Redirect::refresh();
     }
 
     /**

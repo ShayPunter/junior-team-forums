@@ -1,0 +1,2 @@
+- Clean up 'view thread' code and place it into the controller
+- 
