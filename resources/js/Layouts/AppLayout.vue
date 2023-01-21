@@ -1,13 +1,8 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Head } from '@inertiajs/inertia-vue3'
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const userNavigation = [
     { name: 'Settings', href: route('profile.show') },
     { name: 'Sign out', href: route('logout.perform') },
@@ -42,13 +37,29 @@ export default {
 
 <template>
     <div>
+        <Head>
+            <title>Home</title>
+            <meta name="description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!">
+
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+            <link rel="manifest" href="/site.webmanifest">
+
+            <meta property="og:title" content="Home - Junior Team Forum" />
+            <meta property="og:description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!" />
+            <meta property="og:image" :content="asset('logo.png')" />
+        </Head>
+
         <div class="min-h-full">
             <Disclosure as="nav" class="bg-gray-50" v-slot="{ open }">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 items-center justify-between">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <img class="h-8 w-8" :src="asset('logo.png')" alt="Your Company" />
+                                <a :href="route('welcome')">
+                                    <img class="h-8 w-8" :src="asset('logo.png')" alt="Your Company" />
+                                </a>
                             </div>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">

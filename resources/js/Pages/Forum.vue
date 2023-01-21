@@ -16,6 +16,14 @@ export default {
 
 <template>
     <AppLayout title="Junior Team Forum">
+        <Head>
+            <title>{{ $page.props.forum.name }}</title>
+            <meta name="description" :content="'Junior Team Forum - Viewing Forum ' +  $page.props.forum.name ">
+
+            <meta property="og:title" :content="$page.props.forum.name + '- Junior Team Forum'" />
+            <meta property="og:description" :content="$page.props.forum.name + '- Junior Team Forum'" />
+        </Head>
+
         <template #pagetitle>Viewing Forum: {{ $page.props.forum.name }}</template>
 
         <div class="overflow-hidden bg-white shadow sm:rounded-md mt-6">

@@ -68,6 +68,14 @@ export default {
 
 <template>
     <AppLayout title="ThreadCreate">
+        <Head>
+            <title>Create new thread</title>
+            <meta name="description" content="Create a new thread - Junior Team Forum">
+
+            <meta property="og:title" content="Create a new thread - Junior Team Forum" />
+            <meta property="og:description" content="Create a new thread - Junior Team Forum'" />
+        </Head>
+
         <template #pagetitle>Create new thread</template>
 
                 <form @submit="upload" class="space-y-8 divide-gray-200">

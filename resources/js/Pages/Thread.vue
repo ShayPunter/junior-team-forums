@@ -78,6 +78,14 @@ export default {
 
 <template>
     <AppLayout title="Junior Team Forum">
+        <Head>
+            <title>{{ $page.props.thread.title }}</title>
+            <meta name="description" :content="$page.props.thread.content">
+
+            <meta property="og:title" :content="$page.props.thread.title + '- Junior Team Forum'" />
+            <meta property="og:description" :content="$page.props.thread.title + '- Junior Team Forum'" />
+        </Head>
+
         <template #pagetitle>Viewing Thread: {{ $page.props.thread.title }}</template>
 
         <div class="bg-gray-50 rounded shadow px-4 py-5 sm:px-6">

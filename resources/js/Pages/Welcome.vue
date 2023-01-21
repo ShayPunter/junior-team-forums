@@ -2,6 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { ChevronRightIcon, ChatBubbleLeftIcon} from '@heroicons/vue/20/solid'
 import { ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
+import { Head } from '@inertiajs/inertia-vue3'
 </script>
 
 <script>
@@ -45,6 +46,15 @@ export default {
 
 <template>
     <AppLayout title="Junior Team Forum">
+        <Head>
+            <title>Home</title>
+            <meta name="description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!">
+
+            <meta property="og:title" content="Home - Junior Team Forum" />
+            <meta property="og:description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!" />
+            <meta property="og:image" :content="asset('logo.png')" />
+        </Head>
+
         <template #pagetitle>Junior Team Forum</template>
 
         <div v-for="category in categories" class="overflow-hidden bg-white shadow sm:rounded-md mt-6">
