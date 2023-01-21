@@ -1,2 +1,0 @@
-- Figure out why sanctum is overriding the web guard, see if I can override it without security issues
-- 

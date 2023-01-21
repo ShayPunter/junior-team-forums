@@ -10,10 +10,10 @@ use Inertia\Inertia;
 
 class CategoriesController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->authorizeResource(Categories::class, 'categories');
-//    }
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class);
+    }
 
     /**
      * Display a listing of the resource.

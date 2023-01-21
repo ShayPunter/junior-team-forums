@@ -11,6 +11,11 @@ use Inertia\Inertia;
 
 class ForumController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Forum::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
