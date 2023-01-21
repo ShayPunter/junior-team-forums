@@ -20,6 +20,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
                                 <tr>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
                                     <th scope="col" class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
+                                    <th scope="col" class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Category</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Threads</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Edit</span>
@@ -31,14 +32,17 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
                                     <td class="relative w-12 px-6 sm:w-16 sm:px-8">
                                     </td>
                                     <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                                        {{ forum.name }}
+                                        {{ forum.forum.name }}
+                                    </td>
+                                    <td class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
+                                        {{ forum.category }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        0
+                                        {{ forum.threadCount }}
                                     </td>
                                     <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a :href="route('forums.edit', forum.id)" class="text-indigo-600 hover:text-indigo-900"
-                                        >Edit<span class="sr-only">, {{ forum.name }}</span></a
+                                        <a :href="route('forums.edit', forum.forum.id)" class="text-indigo-600 hover:text-indigo-900"
+                                        >Edit<span class="sr-only">, {{ forum.forum.name }}</span></a
                                         >
                                     </td>
                                 </tr>

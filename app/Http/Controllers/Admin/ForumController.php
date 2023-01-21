@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Forum;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -23,7 +24,17 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Forums/Index', ['forums' => Forum::all()]);
+        $forumArray = [];
+        $forums = Forum::all();
+
+        foreach ($forums as $forum) {
+            $category = Category::find($forum->category_id)->pluck('name')->first();
+            $threadCount = count(Thread::where('forum_id', $forum->id)->get());
+
+            $forumArray[] = ['forum' => $forum, 'category' => $category, 'threadCount' => $threadCount];
+        }
+
+        return Inertia::render('Forums/Index', ['forums' => $forumArray]);
     }
 
     /**
