@@ -11,15 +11,6 @@ export default {
             threads: '',
         }
     },
-
-    mounted() {
-
-        // fetch all categories and forums
-        // axios.get(route('api-forum', this.$page.props.forum)).then(response => {
-        //     this.threads = response.data
-        // })
-
-    },
 }
 </script>
 

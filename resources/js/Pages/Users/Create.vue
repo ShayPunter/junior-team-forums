@@ -28,21 +28,6 @@ export default {
             e.preventDefault()
 
             this.$inertia.post(route('users.store'), form)
-
-            // axios.post(route('users.store'), form, {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }
-            // }).then(response => {
-            //
-            //     this.$inertia.
-            //
-            //     console.log(response)
-            //
-            //     // if (response.data.message === "success") {
-            //     //     window.location.href = route('users', {'success': 'User Created Successfully.'});
-            //     // }
-            // })
         }
     }
 }

@@ -4,8 +4,6 @@ import PageHeader from "@/Components/PageHeader.vue";
 </script>
 
 <script>
-import {useForm} from "@inertiajs/inertia-vue3";
-
 export default {
     name: 'app',
     data() {

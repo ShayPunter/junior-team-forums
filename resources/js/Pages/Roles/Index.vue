@@ -3,14 +3,6 @@ import PageHeader from "@/Components/PageHeader.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 </script>
 
-<script>
-export default {
-    created() {
-        console.log(this.$page.props.roles)
-    }
-}
-</script>
-
 <template>
     <AdminLayout title="Roles & Permissions">
         <template #pagehead>
