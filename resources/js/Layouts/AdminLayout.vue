@@ -52,7 +52,7 @@ const logout = () => {
 
                 <div class="fixed inset-0 z-40 flex">
                     <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
-                        <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4">
+                        <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-900 pt-5 pb-4">
                             <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100" leave-to="opacity-0">
                                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                                     <button type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebarOpen = false">
@@ -66,7 +66,7 @@ const logout = () => {
                             </div>
                             <div class="mt-5 h-0 flex-1 overflow-y-auto">
                                 <nav class="space-y-1 px-2">
-                                    <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
+                                    <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-800 text-white' : 'text-indigo-100 hover:bg-gray-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
                                         <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
                                         {{ item.name }}
                                     </a>
@@ -109,10 +109,6 @@ const logout = () => {
                     <div class="flex flex-1">
                     </div>
                     <div class="ml-4 flex items-center md:ml-6">
-<!--                        <button type="button" class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">-->
-<!--                            <span class="sr-only">View notifications</span>-->
-<!--                            <BellIcon class="h-6 w-6" aria-hidden="true" />-->
-<!--                        </button>-->
 
                         <!-- Profile dropdown -->
                         <Menu as="div" class="relative ml-3">
