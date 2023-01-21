@@ -9,6 +9,8 @@
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
 
+        <meta property="og:title" content="Junior Team Forum" />
+        <meta property="og:description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!" />
         <meta property="og:image" content="{{ asset('logo.png') }}" />
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
