@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { VueEditor } from "vue3-editor";
+import { Head } from '@inertiajs/inertia-vue3'
 </script>
 
 <script>

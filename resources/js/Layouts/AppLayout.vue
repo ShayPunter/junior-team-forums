@@ -37,20 +37,6 @@ export default {
 
 <template>
     <div>
-        <Head>
-            <title>Home</title>
-            <meta name="description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!">
-
-            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-            <link rel="manifest" href="/site.webmanifest">
-
-            <meta property="og:title" content="Home - Junior Team Forum" />
-            <meta property="og:description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!" />
-            <meta property="og:image" :content="asset('logo.png')" />
-        </Head>
-
         <div class="min-h-full">
             <Disclosure as="nav" class="bg-gray-50" v-slot="{ open }">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -52,7 +52,6 @@ export default {
 
             <meta property="og:title" content="Home - Junior Team Forum" />
             <meta property="og:description" content="Junior Team Forum, the best place for all of your minecraft services and requirements!" />
-            <meta property="og:image" :content="asset('logo.png')" />
         </Head>
 
         <template #pagetitle>Junior Team Forum</template>
