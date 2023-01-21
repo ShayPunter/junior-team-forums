@@ -101,18 +101,17 @@ export default {
                     <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                         <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-300 hover:bg-opacity-75', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
                     </div>
-                    <div v-if="$page.props.user" class="border-t border-indigo-700 pt-4 pb-3">
+                    <div v-if="$page.props.user" class="border-t border-orange-500 pt-4 pb-3">
                         <div class="flex items-center px-5">
                             <div class="flex-shrink-0">
                                 <img class="h-10 w-10 rounded-full" :src="$page.props.user.profile_photo_url" alt="User Profile Picture" />
                             </div>
                             <div class="ml-3">
-                                <div class="text-base font-medium text-white">{{ user.name }}</div>
-                                <div class="text-sm font-medium text-indigo-300">{{ user.email }}</div>
+                                <div class="text-base font-medium text-gray-600">{{ user.name }}</div>
                             </div>
                         </div>
                         <div class="mt-3 space-y-1 px-2">
-                            <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">{{ item.name }}</DisclosureButton>
+                            <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-orange-500 hover:text-white">{{ item.name }}</DisclosureButton>
                         </div>
                     </div>
                     <div v-else class="space-y-1 px-2 pt-2 pb-3 sm:px-3">

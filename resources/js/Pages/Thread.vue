@@ -115,7 +115,7 @@ export default {
                 <p class="text-lg font-semibold my-2 font-medium text-gray-900">
                     {{ threadReply.poster.name }}
                 </p>
-                <p v-for="role in threadReply.poster.role" :class="role === 'admin' ? ['bg-red-500 text-center w-1/2 py-[2px] rounded text-white'] : ['w-1/2 py-[2px] rounded text-white']">{{ role }}</p>
+                <p v-for="role in threadReply.poster.role" :class="role === 'admin' ? ['mb-4 bg-red-500 text-center w-1/2 py-[2px] rounded text-white'] : ['mb-4 w-1/2 py-[2px] rounded text-white']">{{ role }}</p>
             </div>
 
             <div class="lg:col-span-10">
