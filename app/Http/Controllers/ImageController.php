@@ -9,7 +9,7 @@ class ImageController extends Controller
     /**
      * Validates, uploads and returns an image URL
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function uploadImage(Request $request)

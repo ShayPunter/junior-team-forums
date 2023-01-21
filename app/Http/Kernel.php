@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\GlobalShare;
 use App\Http\Middleware\InjectUserRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

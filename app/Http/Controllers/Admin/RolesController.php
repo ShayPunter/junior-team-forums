@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -70,7 +69,7 @@ class RolesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Role $role
+     * @param  Role  $role
      * @return \Inertia\Response
      */
     public function edit(Role $role)
@@ -106,7 +105,7 @@ class RolesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Role $role
+     * @param  Role  $role
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Role $role)

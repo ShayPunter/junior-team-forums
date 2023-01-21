@@ -39,7 +39,7 @@ Route::resource('/thread', ThreadController::class)->name('index', 'thread')->na
 // /logout-perform (logs out a user when they hit this url)
 Route::get('/logout-perform', [\App\Http\Controllers\LogoutController::class, 'logout'])->name('logout.perform');
 
-Route::middleware(['auth:sanctum'])->group(function() {
+Route::middleware(['auth:sanctum'])->group(function () {
     // /forums/{forum_id}/create (create thread in forum)
     Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');
 
@@ -55,7 +55,6 @@ Route::middleware([
     'can:admin.view',
     'role:admin',
 ])->prefix('/admin')->group(function () {
-
     // /admin/dashboard (admin dashboard)
     Route::get('/dashboard', function () {
         $users = count(User::all());

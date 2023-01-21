@@ -110,7 +110,7 @@ class SetupCommand extends Command
         $this->info('');
         $this->info('[Forum Setup] Admin User Details: ');
         $this->info('[Forum Setup] Email: admin@admin.com');
-        $this->info('[Forum Setup] Password: ' . $password);
+        $this->info('[Forum Setup] Password: '.$password);
         $this->info('[Forum Setup] Login URL: '.env('APP_URL').'/login');
 
         return Command::SUCCESS;
@@ -122,7 +122,7 @@ class SetupCommand extends Command
      * @param $n
      * @return string
      */
-    function getRandomString($n)
+    public function getRandomString($n)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';

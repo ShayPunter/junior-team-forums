@@ -59,7 +59,8 @@ class FrontendController extends Controller
      * @param $id
      * @return \Inertia\Response
      */
-    public function get_forum($id) {
+    public function get_forum($id)
+    {
         $threads = [];
 
         foreach (Thread::where('forum_id', $id)->get() as $thread) {
