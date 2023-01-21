@@ -10,6 +10,7 @@ use App\Http\Controllers\ThreadRepliesController;
 use App\Models\Forum;
 use App\Models\Thread;
 use App\Models\ThreadReplies;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,11 +48,16 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
     'inject_user_role',
+    'can:admin.view',
+    'role:admin',
 ])->prefix('/admin')->group(function () {
 
     // /admin/dashboard (admin dashboard)
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        $users = count(User::all());
+        $threads = count(Thread::all()) + count(ThreadReplies::all());
+
+        return Inertia::render('Dashboard', ['threads' => $threads, 'users' => $users]);
     })->name('dashboard');
 
     // /users (resource URLs for managing users)
