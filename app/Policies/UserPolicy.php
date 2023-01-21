@@ -58,12 +58,12 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        if ($user->can('users.update')) {
-            return $user->id === $model->user;
-        }
-
         if ($user->can('users.*')) {
             return true;
+        }
+
+        if ($user->can('users.update')) {
+            return $user->id === $model->user;
         }
     }
 
