@@ -78,19 +78,19 @@ export default {
 
 <template>
     <AppLayout title="Junior Team Forum">
-        <template #pagetitle>Viewing Thread: {{ this.$page.props.thread.title }}</template>
+        <template #pagetitle>Viewing Thread: {{ $page.props.thread.title }}</template>
 
         <div class="bg-gray-50 rounded shadow px-4 py-5 sm:px-6">
             <div class="flex space-x-3 border-b pb-4">
                 <div class="flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full" :src="this.$page.props.poster.profile_photo_url" alt="Poster Profile" />
+                    <img class="h-10 w-10 rounded-full" :src="$page.props.poster.profile_photo_url" alt="Poster Profile" />
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-sm font-medium text-gray-900">
-                        <a href="#" class="hover:underline">{{ this.$page.props.poster.name }} <span v-for="role in this.$page.props.poster.role" :class="role === 'admin' ? ['bg-red-500 px-[6px] py-[2px] rounded text-white'] : ['']">{{ role }}</span></a>
+                        <a href="#" class="hover:underline">{{ $page.props.poster.name }} <span v-for="role in $page.props.poster.role" :class="role === 'admin' ? ['bg-red-500 px-[6px] py-[2px] rounded text-white'] : ['']">{{ role }}</span></a>
                     </p>
                     <p class="text-sm text-gray-500">
-                        <a href="#" class="hover:underline">{{ dayjs(this.$page.props.thread.created_at).format('DD/MM/YYYY HH:MM') }}</a>
+                        <a href="#" class="hover:underline">{{ dayjs($page.props.thread.created_at).format('DD/MM/YYYY HH:MM') }}</a>
                     </p>
                 </div>
                 <div class="flex flex-shrink-0 self-center">
@@ -105,7 +105,7 @@ export default {
                 </div>
             </div>
 
-            <div class="my-4" v-html="this.$page.props.thread.content"></div>
+            <div class="my-4" v-html="$page.props.thread.content"></div>
 
         </div>
 
@@ -143,9 +143,9 @@ export default {
             </div>
         </div>
 
-        <div v-if="this.$page.props.user" class="bg-gray-50 rounded shadow my-4 py-4 px-4 lg:grid lg:grid-cols-12">
+        <div v-if="$page.props.user" class="bg-gray-50 rounded shadow my-4 py-4 px-4 lg:grid lg:grid-cols-12">
             <div class="mt-6 flex items-center text-sm col-start-1 row-start-1 mt-0 flex-col items-start col-span-2">
-                <img :src="this.$page.props.user.profile_photo_url" class="rounded h-[96px] w-[96px] mx-auto" width="96" height="96">
+                <img :src="$page.props.user.profile_photo_url" class="rounded h-[96px] w-[96px] mx-auto" width="96" height="96">
             </div>
 
             <div class="lg:col-span-10">

@@ -72,7 +72,7 @@ export default {
 
                 <form @submit="upload" class="space-y-8 divide-gray-200">
                     <input type="hidden" name="_token" :value="csrf">
-                    <input type="hidden" name="forum" :value="this.$page.props.forum">
+                    <input type="hidden" name="forum" :value="$page.props.forum">
                     <div class="space-y-8 sm:space-y-5">
 
                         <div class="space-y-6 sm:space-y-5">
