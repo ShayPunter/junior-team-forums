@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { VueEditor } from "vue3-editor";
-import * as dayjs from 'dayjs'
+import dayjs from "dayjs";
 </script>
 
 <script>

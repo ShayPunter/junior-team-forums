@@ -63,11 +63,11 @@ Route::prefix('/internal')->group(function () {
         $roles = $user->getRoleNames();
 
         if ($roles->contains('admin')) {
-            return response()->json(['can' => true, 'debug' => $roles]);
+            return response()->json(['can' => true]);
         }
 
         if ($user->can($request->permission)) {
-            return response()->json(['can' => true, 'debug' => $request->permission]);
+            return response()->json(['can' => true]);
         }
 
         return response()->json(['can' => false]);

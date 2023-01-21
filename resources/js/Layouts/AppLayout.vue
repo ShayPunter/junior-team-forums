@@ -31,9 +31,6 @@ export default {
                 'permission': 'admin.view',
                 'user': this.$page.props.user.id,
             }).then(res => {
-                console.log(this.$page.props.user)
-                console.log(res.data)
-
                 if (res.data.can === true) {
                     this.navigation.push({ name: 'Admin', href: route('dashboard'), current: route().current('dashboard') })
                 }
