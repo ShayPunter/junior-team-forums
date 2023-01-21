@@ -86,7 +86,6 @@ class SetupCommand extends Command
         $default->givePermissionTo($forums_show)->guard(['sanctum']);
 
         $admin->givePermissionTo($user_admin)->guard(['sanctum']);
-        $admin->givePermissionTo($roles_update)->guard(['sanctum']);
         $admin->givePermissionTo($roles_admin)->guard(['sanctum']);
         $admin->givePermissionTo($categories_admin)->guard(['sanctum']);
         $admin->givePermissionTo($forums_admin)->guard(['sanctum']);

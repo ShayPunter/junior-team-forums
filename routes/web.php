@@ -25,7 +25,6 @@ use Inertia\Inertia;
 |
 */
 
-
 // / (home page)
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -37,11 +36,16 @@ Route::get('/forums/{id}', [FrontendController::class, 'get_forum'])->name('view
 // /thread (thread resource)
 Route::resource('/thread', ThreadController::class)->name('index', 'thread')->name('create', 'thread.notinuse');
 
-// /forums/{forum_id}/create (create thread in forum)
-Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');
+// /logout-perform (logs out a user when they hit this url)
+Route::get('/logout-perform', [\App\Http\Controllers\LogoutController::class, 'logout'])->name('logout.perform');
 
-// /threadReplies (thread-replies resource management route)
-Route::resource('/threadReplies', ThreadRepliesController::class)->name('store', 'threadReplies.store');
+Route::middleware(['auth:sanctum'])->group(function() {
+    // /forums/{forum_id}/create (create thread in forum)
+    Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');
+
+    // /threadReplies (thread-replies resource management route)
+    Route::resource('/threadReplies', ThreadRepliesController::class)->name('store', 'threadReplies.store');
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -68,7 +72,4 @@ Route::middleware([
     Route::resource('/category', CategoriesController::class)->name('index', 'category');
     // /forums (resource URLs for managing forums
     Route::resource('/forums', ForumController::class)->name('index', 'forums');
-
-    // /logout-perform (logs out a user when they hit this url)
-    Route::get('/logout-perform', 'LogoutController@perform')->name('logout.perform');
 });

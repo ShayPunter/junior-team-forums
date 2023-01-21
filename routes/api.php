@@ -56,6 +56,20 @@ Route::prefix('/internal')->group(function () {
         return response()->json($threadRepliesArray);
     })->name('api-thread-replies');
 
-    // todo: API image uploader
     Route::post('/uploadImage', [ImageController::class, 'uploadImage'])->name('api-uploadImage');
+
+    Route::post('/permission-check', function (Request $request) {
+        $user = User::find($request->user)->first();
+        $roles = $user->getRoleNames();
+
+        if ($roles->contains('admin')) {
+            return response()->json(['can' => true]);
+        }
+
+        if ($user->can($request->permission)) {
+            return response()->json(['can' => true]);
+        }
+
+        return response()->json(['can' => false]);
+    })->name('permission-check');
 });

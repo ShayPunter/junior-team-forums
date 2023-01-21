@@ -33,7 +33,7 @@ export default {
                     <div class="ml-4 mt-2">
                         <h3 class="text-lg font-medium leading-6 text-gray-900">{{ this.$page.props.forum.name }}</h3>
                     </div>
-                    <div class="ml-4 mt-2 flex-shrink-0">
+                    <div v-if="$page.props.user" class="ml-4 mt-2 flex-shrink-0">
                         <a :href="route('thread.create', this.$page.props.forum.id)">
                             <button type="button" class="relative inline-flex items-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">Create new thread</button>
                         </a>

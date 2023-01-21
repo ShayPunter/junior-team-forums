@@ -8,18 +8,36 @@ const user = {
     imageUrl:
         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-
-const navigation = [
-    { name: 'Home', href: route('welcome'), current: route().current('welcome') },
-    // { name: 'Team', href: '#', current: false },
-    // { name: 'Projects', href: '#', current: false },
-    // { name: 'Calendar', href: '#', current: false },
-    // { name: 'Reports', href: '#', current: false },
-]
 const userNavigation = [
     { name: 'Settings', href: route('profile.show') },
     { name: 'Sign out', href: route('logout.perform') },
 ]
+</script>
+
+<script>
+export default {
+    data() {
+        return {
+            admin_view: false,
+            navigation: [
+                { name: 'Home', href: route('welcome'), current: route().current('welcome') },
+            ],
+        }
+    },
+
+    created() {
+        if (this.$page.props.user !== null) {
+            axios.post(route('permission-check'), {
+                'permission': 'admin.view',
+                'user': this.$page.props.user.id,
+            }).then(res => {
+                if (res.data.can === true) {
+                    this.navigation.push({ name: 'Admin', href: route('dashboard'), current: route().current('dashboard') })
+                }
+            })
+        }
+    }
+}
 </script>
 
 <template>
@@ -53,6 +71,10 @@ const userNavigation = [
                                         <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                             <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                                                 <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
+                                            </MenuItem>
+
+                                            <MenuItem v-if="admin_view">
+                                                <a :href="route('dashboard')" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Admin Area</a>
                                             </MenuItem>
                                         </MenuItems>
                                     </transition>
