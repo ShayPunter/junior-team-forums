@@ -16,23 +16,23 @@ export default {
 
 <template>
     <AppLayout title="Junior Team Forum">
-        <template #pagetitle>Viewing Forum: {{ this.$page.props.forum.name }}</template>
+        <template #pagetitle>Viewing Forum: {{ $page.props.forum.name }}</template>
 
         <div class="overflow-hidden bg-white shadow sm:rounded-md mt-6">
             <div class="border-b border-gray-200 bg-gray-100 px-4 py-5 sm:px-6">
                 <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
                     <div class="ml-4 mt-2">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ this.$page.props.forum.name }}</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ $page.props.forum.name }}</h3>
                     </div>
                     <div v-if="$page.props.user" class="ml-4 mt-2 flex-shrink-0">
-                        <a :href="route('thread.create', this.$page.props.forum.id)">
+                        <a :href="route('thread.create', $page.props.forum.id)">
                             <button type="button" class="relative inline-flex items-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">Create new thread</button>
                         </a>
                     </div>
                 </div>
             </div>
             <ul role="list" class="divide-y divide-gray-200">
-                <li v-for="thread in this.$page.props.threads" :key="thread.thread.id">
+                <li v-for="thread in $page.props.threads" :key="thread.thread.id">
                     <a :href="route('thread.show', thread.thread)" class="block hover:bg-gray-50">
                         <div class="flex items-center px-4 py-4 sm:px-6">
                             <div class="flex min-w-0 flex-1 items-center">
