@@ -39,57 +39,58 @@ class SetupCommand extends Command
         $this->info('[Forum Setup] Creating roles...');
 
         // Create Roles
-        $admin = Role::create(['name' => 'admin']);
-        $default = Role::create(['name' => 'default']);
+        $admin = Role::create(['name' => 'admin', 'guard_name' => 'sanctum']);
+        $default = Role::create(['name' => 'default', 'guard_name' => 'sanctum']);
 
         $this->info('[Forum Setup] Created Roles');
         $this->info('[Forum Setup] Setting up permissions...');
 
-        $user_admin = Permission::create(['name' => 'users.*']);
-        $user_index = Permission::create(['name' => 'users.index']);
-        $user_show = Permission::create(['name' => 'users.show']);
-        $user_create = Permission::create(['name' => 'users.create']);
-        $user_edit = Permission::create(['name' => 'users.edit']);
-        $user_update = Permission::create(['name' => 'users.update']);
-        $user_delete = Permission::create(['name' => 'users.delete']);
+        $user_admin = Permission::create(['name' => 'users.*', 'guard_name' => 'sanctum']);
+        $user_index = Permission::create(['name' => 'users.index', 'guard_name' => 'sanctum']);
+        $user_show = Permission::create(['name' => 'users.show', 'guard_name' => 'sanctum']);
+        $user_create = Permission::create(['name' => 'users.create', 'guard_name' => 'sanctum']);
+        $user_edit = Permission::create(['name' => 'users.edit', 'guard_name' => 'sanctum']);
+        $user_update = Permission::create(['name' => 'users.update', 'guard_name' => 'sanctum']);
+        $user_delete = Permission::create(['name' => 'users.delete', 'guard_name' => 'sanctum']);
 
-        $roles_admin = Permission::create(['name' => 'roles.*']);
-        $roles_index = Permission::create(['name' => 'roles.index']);
-        $roles_show = Permission::create(['name' => 'roles.show']);
-        $roles_create = Permission::create(['name' => 'roles.create']);
-        $roles_edit = Permission::create(['name' => 'roles.edit']);
-        $roles_update = Permission::create(['name' => 'roles.update']);
-        $roles_delete = Permission::create(['name' => 'roles.delete']);
+        $roles_admin = Permission::create(['name' => 'roles.*', 'guard_name' => 'sanctum']);
+        $roles_index = Permission::create(['name' => 'roles.index', 'guard_name' => 'sanctum']);
+        $roles_show = Permission::create(['name' => 'roles.show', 'guard_name' => 'sanctum']);
+        $roles_create = Permission::create(['name' => 'roles.create', 'guard_name' => 'sanctum']);
+        $roles_edit = Permission::create(['name' => 'roles.edit', 'guard_name' => 'sanctum']);
+        $roles_update = Permission::create(['name' => 'roles.update', 'guard_name' => 'sanctum']);
+        $roles_delete = Permission::create(['name' => 'roles.delete', 'guard_name' => 'sanctum']);
 
-        $categories_admin = Permission::create(['name' => 'categories.*']);
-        $categories_index = Permission::create(['name' => 'categories.index']);
-        $categories_show = Permission::create(['name' => 'categories.show']);
-        $categories_create = Permission::create(['name' => 'categories.create']);
-        $categories_edit = Permission::create(['name' => 'categories.edit']);
-        $categories_update = Permission::create(['name' => 'categories.update']);
-        $categories_delete = Permission::create(['name' => 'categories.delete']);
+        $categories_admin = Permission::create(['name' => 'categories.*', 'guard_name' => 'sanctum']);
+        $categories_index = Permission::create(['name' => 'categories.index', 'guard_name' => 'sanctum']);
+        $categories_show = Permission::create(['name' => 'categories.show', 'guard_name' => 'sanctum']);
+        $categories_create = Permission::create(['name' => 'categories.create', 'guard_name' => 'sanctum']);
+        $categories_edit = Permission::create(['name' => 'categories.edit', 'guard_name' => 'sanctum']);
+        $categories_update = Permission::create(['name' => 'categories.update', 'guard_name' => 'sanctum']);
+        $categories_delete = Permission::create(['name' => 'categories.delete', 'guard_name' => 'sanctum']);
 
-        $forums_admin = Permission::create(['name' => 'forums.*']);
-        $forums_index = Permission::create(['name' => 'forums.index']);
-        $forums_show = Permission::create(['name' => 'forums.show']);
-        $forums_create = Permission::create(['name' => 'forums.create']);
-        $forums_edit = Permission::create(['name' => 'forums.edit']);
-        $forums_update = Permission::create(['name' => 'forums.update']);
-        $forums_delete = Permission::create(['name' => 'forums.delete']);
+        $forums_admin = Permission::create(['name' => 'forums.*', 'guard_name' => 'sanctum']);
+        $forums_index = Permission::create(['name' => 'forums.index', 'guard_name' => 'sanctum']);
+        $forums_show = Permission::create(['name' => 'forums.show', 'guard_name' => 'sanctum']);
+        $forums_create = Permission::create(['name' => 'forums.create', 'guard_name' => 'sanctum']);
+        $forums_edit = Permission::create(['name' => 'forums.edit', 'guard_name' => 'sanctum']);
+        $forums_update = Permission::create(['name' => 'forums.update', 'guard_name' => 'sanctum']);
+        $forums_delete = Permission::create(['name' => 'forums.delete', 'guard_name' => 'sanctum']);
 
-        $admin_view = Permission::create(['name' => 'admin.view']);
+        $admin_view = Permission::create(['name' => 'admin.view', 'guard_name' => 'sanctum']);
 
         // Assign Permissions
-        $default->givePermissionTo($categories_index);
-        $default->givePermissionTo($categories_show);
-        $default->givePermissionTo($forums_index);
-        $default->givePermissionTo($forums_show);
+        $default->givePermissionTo($categories_index)->guard(['sanctum']);
+        $default->givePermissionTo($categories_show)->guard(['sanctum']);
+        $default->givePermissionTo($forums_index)->guard(['sanctum']);
+        $default->givePermissionTo($forums_show)->guard(['sanctum']);
 
-        $admin->givePermissionTo($user_admin);
-        $admin->givePermissionTo($roles_admin);
-        $admin->givePermissionTo($categories_admin);
-        $admin->givePermissionTo($forums_admin);
-        $admin->givePermissionTo($admin_view);
+        $admin->givePermissionTo($user_admin)->guard(['sanctum']);
+        $admin->givePermissionTo($roles_update)->guard(['sanctum']);
+        $admin->givePermissionTo($roles_admin)->guard(['sanctum']);
+        $admin->givePermissionTo($categories_admin)->guard(['sanctum']);
+        $admin->givePermissionTo($forums_admin)->guard(['sanctum']);
+        $admin->givePermissionTo($admin_view)->guard(['sanctum']);
 
         $this->info('[Forum Setup] Permissions setup.');
         $this->info('[Forum Setup] Creating admin user...');
@@ -103,7 +104,7 @@ class SetupCommand extends Command
             'password' => Hash::make($password),
         ]);
 
-        $user->assignRole('admin');
+        $user->guard(['sanctum'])->assignRole('admin');
 
         $this->info('[Forum Setup] Created admin user.');
         $this->info('[Forum Setup] Forum installed successfully.');

@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class RolesPolicy
 {
@@ -56,7 +58,13 @@ class RolesPolicy
      */
     public function update(User $user)
     {
-        if ($user->can('roles.*') || $user->can('roles.update')) {
+        Log::info($user->can('roles.update'));
+
+        if ($user->can('roles.update')) {
+            return true;
+        }
+
+        if ($user->can('roles.*')) {
             return true;
         }
     }

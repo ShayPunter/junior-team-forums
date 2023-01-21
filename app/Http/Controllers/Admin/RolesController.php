@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Role::class, 'roles');
+        $this->authorizeResource(Role::class);
     }
 
     /**
@@ -30,7 +29,7 @@ class RolesController extends Controller
         $roleArray = [];
 
         foreach ($roles as $role) {
-            $roleArray[] = ['role' => $role, 'permissions' => $role->permissions->count()];
+            $roleArray[] = ['role' => $role, 'permissions' => count($role->permissions->pluck('name'))];
         }
 
         return Inertia::render('Roles/Index', ['roles' => $roleArray]);
@@ -43,7 +42,9 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Create');
+        $permissions = Permission::all();
+
+        return Inertia::render('Roles/Create', ['permissions' => $permissions]);
     }
 
     /**
@@ -54,99 +55,64 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string'],
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-            'role' => ['string'],
+            'name' => ['required', 'string'],
+            'permissions' => ['required', 'array'],
         ]);
 
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ]);
-
-        $role = strtolower($request->role);
-
-        if ($this->roleExist($role)) {
-            $user->assignRole($role);
-        } else {
-            $user->assignRole('default');
+        $role = Role::create(['name' => $request->input('name')]);
+        foreach ($request->permissions as $permission) {
+            $role->givePermissionTo($permission);
         }
 
-        return Redirect::route('users')->with('success', 'User created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
+        return Redirect::route('roles')->with('success', 'Role created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  Role $role
      * @return \Inertia\Response
      */
-    public function edit(User $user)
+    public function edit(Role $role)
     {
-        return Inertia::render('Users/Edit', ['user' => $user, 'role' => $user->getRoleNames()[0]]);
+        $permissions = Permission::all();
+
+        return Inertia::render('Roles/Edit', ['permissions' => $permissions, ['role' => ['id' => $role->id, 'name' => $role->name, 'permissions' => $role->permissions->pluck('id')]]]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Role  $role
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'role' => ['string'],
+            'name' => ['required', 'string'],
+            'permissions' => ['required', 'array'],
         ]);
 
-        if ($request->email !== $user->email) {
-            $user->update($request->all());
-        } else {
-            $user->name = $request->name;
-            $user->update();
+        $role->name = $request->name;
+        $role->syncPermissions('');
+        foreach ($request->permissions as $permission) {
+            $role->givePermissionTo($permission);
         }
 
-        foreach ($user->getRoleNames() as $role) {
-            $user->removeRole($role);
-        }
-
-        $role = strtolower($request->input('role'));
-
-        if ($this->roleExist($role)) {
-            $user->assignRole($role);
-        } else {
-            $user->assignRole('default');
-        }
-
-        return Redirect::route('users')->with('success', 'User edited successfully.');
+        return Redirect::route('roles')->with('success', 'Role edited successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  Role $role
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(Role $role)
     {
-        $user->delete();
+        $role->delete();
 
-        return Redirect::route('users')->with('success', 'User deleted successfully.');
+        return Redirect::route('roles')->with('success', 'Role deleted successfully.');
     }
 }

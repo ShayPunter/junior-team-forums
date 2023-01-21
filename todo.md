@@ -1,2 +1,2 @@
-- Clean up 'view thread' code and place it into the controller
+- Figure out why sanctum is overriding the web guard, see if I can override it without security issues
 - 

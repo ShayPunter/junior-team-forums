@@ -9,10 +9,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
 
 const form = useForm({
     name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-    role: "",
+    permissions: [],
 })
 
 export default {
@@ -27,31 +24,16 @@ export default {
         upload(e) {
             e.preventDefault()
 
-            this.$inertia.post(route('users.store'), form)
-
-            // axios.post(route('users.store'), form, {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }
-            // }).then(response => {
-            //
-            //     this.$inertia.
-            //
-            //     console.log(response)
-            //
-            //     // if (response.data.message === "success") {
-            //     //     window.location.href = route('users', {'success': 'User Created Successfully.'});
-            //     // }
-            // })
+            this.$inertia.post(route('roles.store'), form)
         }
     }
 }
 </script>
 
 <template>
-    <AdminLayout title="Users">
+    <AdminLayout title="Add Roles">
         <template #pagehead>
-            <PageHeader title="Add User" :button="false"></PageHeader>
+            <PageHeader title="Add Role" :button="false"></PageHeader>
         </template>
 
                 <form @submit="upload" class="space-y-8 divide-gray-200">
@@ -67,34 +49,15 @@ export default {
                                     </div>
                                 </div>
 
+                                <label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 col-span-1">Permissions*</label>
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Email*</label>
-                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <input type="email" name="email" id="email" v-model="form.email" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm" />
-                                    </div>
-                                </div>
-
-                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <label for="password" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Password*</label>
-                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <input id="password" name="password" v-model="form.password" type="password" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                    </div>
-                                </div>
-
-                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Password Confirmation*</label>
-                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <input id="password_confirmation" name="password_confirmation" v-model="form.password_confirmation" type="password" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                    </div>
-                                </div>
-
-                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <label for="role" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Role*</label>
-                                    <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                        <select id="role" name="role" v-model="form.role" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
-                                            <option selected>Default</option>
-                                            <option>Admin</option>
-                                        </select>
+                                    <div v-for="permission in this.$page.props.permissions" class="relative flex col-span-1">
+                                        <div class="flex h-5 items-center">
+                                            <input id="permissions" v-model="form.permissions" :value="permission.id" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="permissions" class="font-medium text-gray-700">{{ permission.name }}</label>
+                                        </div>
                                     </div>
                                 </div>
 

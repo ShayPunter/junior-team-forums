@@ -1,7 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue'
 import PageHeader from "@/Components/PageHeader.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+</script>
+
+<script>
+export default {
+    created() {
+        console.log(this.$page.props.roles)
+    }
+}
 </script>
 
 <template>
@@ -35,7 +42,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
                                         {{ roles.role.name }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ roles.role.permissions }}
+                                        {{ roles.permissions }}
                                     </td>
                                     <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                         <a :href="route('roles.edit', roles.role.id)" class="text-indigo-600 hover:text-indigo-900"

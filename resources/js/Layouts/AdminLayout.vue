@@ -23,7 +23,7 @@ const navigation = [
     { name: 'Manage Forum Categories', href: route('category'), icon: FolderIcon, current: route().current('category')||route().current('category.create')||route().current('category.edit')  },
     { name: 'Manage Forums', href: route('forums'), icon: FolderIcon, current: route().current('forums')||route().current('forums.create')||route().current('forums.edit')  },
     { name: 'Manage Users', href: route('users'), icon: UsersIcon, current: route().current('users')||route().current('users.create')||route().current('users.edit') },
-    // { name: 'Manage Roles & Permissions', href: route('roles'), icon: UsersIcon, current: route().current('roles') },
+    { name: 'Manage Roles & Permissions', href: route('roles'), icon: UsersIcon, current: route().current('roles')||route().current('roles.create')||route().current('roles.edit') },
 ]
 const userNavigation = [
     { name: 'Settings', href: route('profile.show') },
