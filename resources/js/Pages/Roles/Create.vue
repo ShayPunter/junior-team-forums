@@ -51,7 +51,7 @@ export default {
 
                                 <label for="email" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 col-span-1">Permissions*</label>
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
-                                    <div v-for="permission in this.$page.props.permissions" class="relative flex col-span-1">
+                                    <div v-for="permission in $page.props.permissions" class="relative flex col-span-1">
                                         <div class="flex h-5 items-center">
                                             <input id="permissions" v-model="form.permissions" :value="permission.id" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                                         </div>

@@ -31,6 +31,9 @@ export default {
                 'permission': 'admin.view',
                 'user': this.$page.props.user.id,
             }).then(res => {
+                console.log(this.$page.props.user)
+                console.log(res.data)
+
                 if (res.data.can === true) {
                     this.navigation.push({ name: 'Admin', href: route('dashboard'), current: route().current('dashboard') })
                 }
@@ -107,7 +110,7 @@ export default {
                                 <img class="h-10 w-10 rounded-full" :src="$page.props.user.profile_photo_url" alt="User Profile Picture" />
                             </div>
                             <div class="ml-3">
-                                <div class="text-base font-medium text-gray-600">{{ user.name }}</div>
+                                <div class="text-base font-medium text-gray-600">{{ $page.props.user.name }}</div>
                             </div>
                         </div>
                         <div class="mt-3 space-y-1 px-2">

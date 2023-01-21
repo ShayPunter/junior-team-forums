@@ -59,15 +59,15 @@ Route::prefix('/internal')->group(function () {
     Route::post('/uploadImage', [ImageController::class, 'uploadImage'])->name('api-uploadImage');
 
     Route::post('/permission-check', function (Request $request) {
-        $user = User::find($request->user)->first();
+        $user = User::find($request->user);
         $roles = $user->getRoleNames();
 
         if ($roles->contains('admin')) {
-            return response()->json(['can' => true]);
+            return response()->json(['can' => true, 'debug' => $roles]);
         }
 
         if ($user->can($request->permission)) {
-            return response()->json(['can' => true]);
+            return response()->json(['can' => true, 'debug' => $request->permission]);
         }
 
         return response()->json(['can' => false]);

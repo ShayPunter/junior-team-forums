@@ -57,13 +57,11 @@ class RolesPolicy
      */
     public function update(User $user)
     {
-        Log::info($user->can('roles.update'));
-
-        if ($user->can('roles.update')) {
+        if ($user->can('roles.*')) {
             return true;
         }
 
-        if ($user->can('roles.*')) {
+        if ($user->can('roles.update')) {
             return true;
         }
     }
