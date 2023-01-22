@@ -130,7 +130,7 @@ export default {
     methods: {
         stripAndExerpt(text) {
             let cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
-            return cleanText.substring(0, 30)
+            return text.substring(0, 30)
         }
     }
 
@@ -182,7 +182,7 @@ export default {
                                                         <p class="font-semibold text-md text-gray-900"><a :href="route('thread.show', activity.id)" class="hover:underline">{{ activity.type === 'thread' ? 'Created thread: ' + activity.title : 'Replied to thread: ' + activity.title }}</a></p>
                                                     </div>
                                                     <div class="mt-1 text-sm text-gray-700">
-                                                        {{ stripAndExerpt(activity.content) }}
+                                                        {{ stripAndExerpt(activity.content) }}...
                                                     </div>
                                                     <div class="mt-2 space-x-2 text-sm">
                                                         <span class="font-medium text-gray-500">{{ dayjs(activity.updated_at).format('DD/MM/YYYY HH:MM') }}</span>
