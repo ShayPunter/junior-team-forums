@@ -50,7 +50,7 @@ Route::prefix('/internal')->group(function () {
         foreach (ThreadReplies::where('thread_id', $thread_id)->get() as $threadReply) {
             $user = User::where('id', $threadReply->user_id)->first();
 
-            $threadRepliesArray[] = ['threadReply' => $threadReply, 'poster' => ['name' => $user->name, 'role' => $user->getRoleNames(), 'profile_photo_url' => $user->profile_photo_url]];
+            $threadRepliesArray[] = ['threadReply' => $threadReply, 'poster' => ['name' => $user->name, 'role' => $user->getRoleNames(), 'profile_photo_url' => $user->profile_photo_url, 'id' => $user->id]];
         }
 
         return response()->json($threadRepliesArray);

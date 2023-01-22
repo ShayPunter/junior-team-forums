@@ -39,6 +39,8 @@ Route::resource('/thread', ThreadController::class)->name('index', 'thread')->na
 // /logout-perform (logs out a user when they hit this url)
 Route::get('/logout-perform', [\App\Http\Controllers\LogoutController::class, 'logout'])->name('logout.perform');
 
+Route::get('/profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+
 Route::middleware(['auth:sanctum'])->group(function () {
     // /forums/{forum_id}/create (create thread in forum)
     Route::get('/forums/{forum_id}/create', [ThreadController::class, 'create'])->name('thread.create');

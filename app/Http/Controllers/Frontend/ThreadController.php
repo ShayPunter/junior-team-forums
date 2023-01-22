@@ -71,7 +71,7 @@ class ThreadController extends Controller
     {
         $poster = User::where('id', $thread->user_id)->first();
 
-        return Inertia::render('Thread', ['thread' => $thread, 'poster' => ['name' => $poster->name, 'role' => $poster->getRoleNames(), 'profile_photo_url' => $poster->profile_photo_url], 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())]);
+        return Inertia::render('Thread', ['thread' => $thread, 'poster' => ['name' => $poster->name, 'role' => $poster->getRoleNames(), 'profile_photo_url' => $poster->profile_photo_url, 'id' => $poster->id], 'replies' => count(ThreadReplies::where('thread_id', $thread->id)->get())]);
     }
 
     /**

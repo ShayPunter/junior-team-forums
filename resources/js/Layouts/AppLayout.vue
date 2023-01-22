@@ -120,7 +120,7 @@ export default {
             </Disclosure>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
+            <header v-if="$slots.pagetitle" class="bg-white shadow">
                 <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900"><slot name="pagetitle"></slot></h1>
                 </div>

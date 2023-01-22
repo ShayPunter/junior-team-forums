@@ -96,10 +96,10 @@ export default {
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-sm font-medium text-gray-900">
-                        <a href="#" class="hover:underline">{{ $page.props.poster.name }} <span v-for="role in $page.props.poster.role" :class="role === 'admin' ? ['bg-red-500 px-[6px] py-[2px] rounded text-white'] : ['']">{{ role }}</span></a>
+                        <a :href="route('profile', $page.props.poster.id)" class="hover:underline">{{ $page.props.poster.name }}</a> <span v-for="role in $page.props.poster.role" :class="role === 'admin' ? ['bg-red-500 px-[6px] py-[2px] rounded text-white'] : ['']">{{ role }}</span>
                     </p>
                     <p class="text-sm text-gray-500">
-                        <a href="#" class="hover:underline">{{ dayjs($page.props.thread.created_at).format('DD/MM/YYYY HH:MM') }}</a>
+                        {{ dayjs($page.props.thread.created_at).format('DD/MM/YYYY HH:MM') }}
                     </p>
                 </div>
                 <div class="flex flex-shrink-0 self-center">
@@ -122,7 +122,7 @@ export default {
             <div class="mt-6 flex items-center text-sm col-start-1 row-start-1 mt-0 flex-col items-start col-span-2">
                 <img :src="threadReply.poster.profile_photo_url" class="rounded h-[96px] w-[96px] mx-auto" width="96" height="96">
                 <p class="text-lg font-semibold my-2 font-medium text-gray-900">
-                    {{ threadReply.poster.name }}
+                    <a :href="route('profile', threadReply.poster.id)" class="hover:underline">{{ threadReply.poster.name }}</a>
                 </p>
                 <p v-for="role in threadReply.poster.role" :class="role === 'admin' ? ['mb-4 bg-red-500 text-center w-1/2 py-[2px] rounded text-white'] : ['mb-4 w-1/2 py-[2px] rounded text-white']">{{ role }}</p>
             </div>
