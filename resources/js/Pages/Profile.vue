@@ -1,29 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head } from '@inertiajs/inertia-vue3'
-import {
-    CheckIcon,
-    HandThumbUpIcon,
-    UserIcon,
-} from '@heroicons/vue/20/solid'
 import dayjs from "dayjs";
-</script>
-
-<script>
-import sanitizeHtml from "sanitize-html";
-
-export default {
-
-    computed: {
-        sanitizedContent(content) {
-            return sanitizeHtml(content, {
-                allowedTags: ['p', 'br'],
-                allowedAttributes: {}
-            });
-        },
-    },
-
-}
 </script>
 
 <template>
@@ -69,9 +47,6 @@ export default {
                                                 <div>
                                                     <div class="text-sm">
                                                         <p class="font-semibold text-md text-gray-900"><a :href="route('thread.show', activity.id)" class="hover:underline">{{ activity.type === 'thread' ? 'Created thread: ' + activity.title : 'Replied to thread: ' + activity.title }}</a></p>
-                                                    </div>
-                                                    <div class="mt-1 text-sm text-gray-700">
-                                                        <div v-html="sanitizedContent(activity.content.substring(0, 30)) + '...'" v-bind:title="activity.content"></div>
                                                     </div>
                                                     <div class="mt-2 space-x-2 text-sm">
                                                         <span class="font-medium text-gray-500">{{ dayjs(activity.updated_at).format('DD/MM/YYYY HH:MM') }}</span>
