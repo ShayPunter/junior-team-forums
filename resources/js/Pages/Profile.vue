@@ -2,136 +2,26 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head } from '@inertiajs/inertia-vue3'
 import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    Popover,
-    PopoverButton,
-    PopoverOverlay,
-    PopoverPanel,
-    TransitionChild,
-    TransitionRoot,
-} from '@headlessui/vue'
-import {
-    ArrowLongLeftIcon,
     CheckIcon,
     HandThumbUpIcon,
-    HomeIcon,
-    MagnifyingGlassIcon,
-    PaperClipIcon,
-    QuestionMarkCircleIcon,
     UserIcon,
 } from '@heroicons/vue/20/solid'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import dayjs from "dayjs";
-
-const user = {
-    name: 'Whitney Francis',
-    email: 'whitney@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-}
-const navigation = [
-    { name: 'Dashboard', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Applicants', href: '#' },
-    { name: 'Company', href: '#' },
-]
-const breadcrumbs = [
-    { name: 'Jobs', href: '#', current: false },
-    { name: 'Front End Developer', href: '#', current: false },
-    { name: 'Applicants', href: '#', current: true },
-]
-const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
-const attachments = [
-    { name: 'resume_front_end_developer.pdf', href: '#' },
-    { name: 'coverletter_front_end_developer.pdf', href: '#' },
-]
-const eventTypes = {
-    applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
-    advanced: { icon: HandThumbUpIcon, bgColorClass: 'bg-blue-500' },
-    completed: { icon: CheckIcon, bgColorClass: 'bg-green-500' },
-}
-const timeline = [
-    {
-        id: 1,
-        type: eventTypes.applied,
-        content: 'Applied to',
-        target: 'Front End Developer',
-        date: 'Sep 20',
-        datetime: '2020-09-20',
-    },
-    {
-        id: 2,
-        type: eventTypes.advanced,
-        content: 'Advanced to phone screening by',
-        target: 'Bethany Blake',
-        date: 'Sep 22',
-        datetime: '2020-09-22',
-    },
-    {
-        id: 3,
-        type: eventTypes.completed,
-        content: 'Completed phone screening with',
-        target: 'Martha Gardner',
-        date: 'Sep 28',
-        datetime: '2020-09-28',
-    },
-    {
-        id: 4,
-        type: eventTypes.advanced,
-        content: 'Advanced to interview by',
-        target: 'Bethany Blake',
-        date: 'Sep 30',
-        datetime: '2020-09-30',
-    },
-    {
-        id: 5,
-        type: eventTypes.completed,
-        content: 'Completed interview with',
-        target: 'Katherine Snyder',
-        date: 'Oct 4',
-        datetime: '2020-10-04',
-    },
-]
-const comments = [
-    {
-        id: 1,
-        name: 'Leslie Alexander',
-        date: '4d ago',
-        imageId: '1494790108377-be9c29b29330',
-        body: 'Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.',
-    },
-    {
-        id: 2,
-        name: 'Michael Foster',
-        date: '4d ago',
-        imageId: '1519244703995-f4e0f30006d5',
-        body: 'Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.',
-    },
-    {
-        id: 3,
-        name: 'Dries Vincent',
-        date: '4d ago',
-        imageId: '1506794778202-cad84cf45f1d',
-        body: 'Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.',
-    },
-]
 </script>
 
 <script>
+import sanitizeHtml from "sanitize-html";
+
 export default {
 
-    methods: {
-        stripAndExerpt(text) {
-            return text.substring(0, 30)
-        }
-    }
+    computed: {
+        sanitizedContent(content) {
+            return sanitizeHtml(content, {
+                allowedTags: ['p', 'br'],
+                allowedAttributes: {}
+            });
+        },
+    },
 
 }
 </script>
@@ -181,7 +71,7 @@ export default {
                                                         <p class="font-semibold text-md text-gray-900"><a :href="route('thread.show', activity.id)" class="hover:underline">{{ activity.type === 'thread' ? 'Created thread: ' + activity.title : 'Replied to thread: ' + activity.title }}</a></p>
                                                     </div>
                                                     <div class="mt-1 text-sm text-gray-700">
-                                                        <div v-html="activity.content.substring(0, 30) + '...'" v-bind:title="activity.content"></div>
+                                                        <div v-html="sanitizedContent(activity.content.substring(0, 30)) + '...'" v-bind:title="activity.content"></div>
                                                     </div>
                                                     <div class="mt-2 space-x-2 text-sm">
                                                         <span class="font-medium text-gray-500">{{ dayjs(activity.updated_at).format('DD/MM/YYYY HH:MM') }}</span>
