@@ -1,7 +1,10 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head } from '@inertiajs/inertia-vue3'
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 </script>
 
 <template>
@@ -40,18 +43,16 @@ import dayjs from "dayjs";
                                 <div class="px-4 py-5 sm:px-6">
                                     <h2 id="notes-title" class="text-lg font-medium text-gray-900">Activity</h2>
                                 </div>
-                                <div class="px-4 py-6 sm:px-6">
-                                    <ul role="list" class="space-y-8">
+                                <div class="px-4 py-6 sm:px-6" >
+                                    <ul role="list" class="space-y-4 divide-y-2 divide-gray-100">
                                         <li v-for="activity in $page.props.activity">
                                             <div class="flex space-x-3">
                                                 <div>
-                                                    <div class="text-sm">
-                                                        <p class="font-semibold text-md text-gray-900"><a :href="route('thread.show', activity.id)" class="hover:underline">{{ activity.type === 'thread' ? 'Created thread: ' + activity.title : 'Replied to thread: ' + activity.title }}</a></p>
+                                                    <div class="text-md">
+                                                        <p class="font-semibold text-gray-900"><a :href="route('thread.show', activity.id)" class="hover:underline">{{ activity.type === 'thread' ? 'Created thread: ' + activity.title : 'Replied to thread: ' + activity.title }}</a></p>
                                                     </div>
                                                     <div class="mt-2 space-x-2 text-sm">
-                                                        <span class="font-medium text-gray-500">{{ dayjs(activity.updated_at).format('DD/MM/YYYY HH:MM') }}</span>
-                                                        {{ ' ' }}
-                                                        <span class="font-medium text-gray-500">&middot;</span>
+                                                        <span class="font-medium text-gray-500">{{ dayjs(activity.updated_at).fromNow() }}</span>
                                                         {{ ' ' }}
                                                     </div>
                                                 </div>
